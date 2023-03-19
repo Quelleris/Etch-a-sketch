@@ -3,6 +3,7 @@ const sizeInput = document.querySelector("#sizeInput");
 const sizeValue = document.querySelector(".size-value");
 const borderBtn = document.querySelector("#borderBtn");
 const gridItems = document.querySelectorAll(".grid-item");
+const resetBtn = document.querySelector("#reset");
 
 const DEFAULT_COLOR = '#000000';
 const DEFAULT_MODE = 'color';
@@ -39,6 +40,8 @@ function toggleBorder() {
     }
 }
 
+resetBtn.addEventListener("click", reset);
+
 function changeGrid() {
     const grid = document.querySelector("#grid");
     grid.innerHTML = '';
@@ -55,4 +58,13 @@ function changeGrid() {
 
 function colorItem(e) {
     e.target.style.backgroundColor = color;
+}
+
+function reset() {
+    const gridItems = document.querySelectorAll(".grid-item");
+    if (gridItems) {
+        gridItems.forEach(item => {
+            item.style.backgroundColor = "#FFFFFF";
+        });
+    }
 }
