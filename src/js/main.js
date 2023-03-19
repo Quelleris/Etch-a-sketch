@@ -4,6 +4,7 @@ const sizeValue = document.querySelector(".size-value");
 const borderBtn = document.querySelector("#borderBtn");
 const gridItems = document.querySelectorAll(".grid-item");
 const resetBtn = document.querySelector("#reset");
+const modeRadioBtns = document.querySelectorAll('input[name="modeChoice"]');
 
 const DEFAULT_COLOR = '#000000';
 const DEFAULT_MODE = 'color';
@@ -42,6 +43,10 @@ function toggleBorder() {
 
 resetBtn.addEventListener("click", reset);
 
+modeRadioBtns.forEach(btn => {
+    btn.addEventListener('click', changeMode);
+})
+
 function changeGrid() {
     const grid = document.querySelector("#grid");
     grid.innerHTML = '';
@@ -57,7 +62,27 @@ function changeGrid() {
 }
 
 function colorItem(e) {
-    e.target.style.backgroundColor = color;
+    if (mode === 'color') {
+        color = colorInput.value;
+        e.target.style.backgroundColor = color;
+        console.log('color', mode);
+    }    
+    else if (mode === 'rainbow') {
+        color = getRandomColor();
+        e.target.style.backgroundColor = color;
+    }    
+            // e.target.style.backgroundColor = color;
+        // case 'darken':
+        //     color = darkenColor(color);
+        //     e.target.style.backgroundColor = color;
+        // case 'lighten':
+        //     color = lightenColor(color);
+        //     e.target.style.backgroundColor = color;
+    }
+
+function changeMode(e) {
+    mode = e.target.value;
+    console.log(mode);
 }
 
 function reset() {
@@ -67,4 +92,12 @@ function reset() {
             item.style.backgroundColor = "#FFFFFF";
         });
     }
+}
+
+function getRandomColor() {
+    const R = Math.floor(Math.random() * 255);
+    const G = Math.floor(Math.random() * 255);
+    const B = Math.floor(Math.random() * 255);
+    const randomColor = `rgb(${R}, ${G}, ${B})`;
+    return randomColor;
 }
