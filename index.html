@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/src/style/style.css">
+    <title>Sketch-a-Sketch</title>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <h1>Etch-a-sketch</h1>
+        </div>
+    </header>
+    <main>
+        <div class="container">
+            <section class="settings">
+                <div class="input-item">
+                    <label for="color-picker"></label>
+                    <input type="color" id="colorInput" class="color-input" value="#000000">
+                </div>
+                <fieldset>
+                    <div>
+                        <input type="radio" name="modeChoice" id="modeChoicePick">
+                        <label for="color">color</label>
+                    </div>
+                    <div>
+                        <input type="radio" name="modeChoice" id="modeChoiceRainbow">
+                        <label for="rainbow">Rainbow</label>
+                    </div>
+                    <div>
+                        <input type="radio" name="modeChoice" id="modeChoiceDarken">
+                        <label for="rainbow">Darken</label>
+                    </div>
+                    <div>
+                        <input type="radio" name="modeChoice" id="modeChoiceLighten">
+                        <label for="rainbow">Lighten</label>
+                    </div>
+                </fieldset>
+                <button id="borderBtn" class="btn lines-btn">Toggle Lines</button>
+                <div class="input-item">
+                    <label for="size">Size</label>
+                    <input type="range" min="8" max="32" step="8" value="16"
+                    id="sizeInput" class="size-input">
+                    <p class="size-value">
+                        <output id="size-value"></output>
+                    </p>
+                </div>
+                <button id="reset" class="btn reset-btn">Reset</button>
+            </section>
+            <section id="grid" class="grid"></section>
+        </div>
+    </main>
+
+    <script src="/src/js/main.js"></script>
+</body>
+</html>
