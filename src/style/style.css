@@ -22,6 +22,7 @@ button {
     border: 1px solid #dcdcdc;
     padding: 0.69rem 1.13rem;
     background-color: white;
+    transition: 0.25s ease-in-out;
 }
 
 input {
@@ -42,6 +43,7 @@ input[type="radio"] + label {
     cursor: pointer;
     border: 1px solid #dcdcdc;
     margin-bottom: 12px;
+    transition: 0.25s ease-in-out;
 }
 
 input[type="radio"]:checked + label {
