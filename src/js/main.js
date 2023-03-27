@@ -19,6 +19,7 @@ let mouseDown = false
 
 window.onload = () => {
     changeGrid();
+    sizeValue.textContent = `${gridSize} x ${gridSize}`;
 }
 
 gridLayout.onmousedown = () => (mouseDown = true)
@@ -31,7 +32,7 @@ colorInput.addEventListener("change", () => {
 
 sizeInput.addEventListener("input", (e) => {
     gridSize = e.target.value;
-    sizeValue.textContent = e.target.value;
+    sizeValue.textContent = `${e.target.value} x ${e.target.value}`;
 })
 
 sizeInput.addEventListener("change", changeGrid);
@@ -51,6 +52,7 @@ function toggleBorder() {
         gridItems.forEach(item => {
             item.classList.toggle("border");
         });
+        borderBtn.classList.toggle("active");
     }
 }
 
