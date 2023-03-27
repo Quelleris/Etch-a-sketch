@@ -2,6 +2,7 @@ const colorInput = document.querySelector("#colorInput");
 const sizeInput = document.querySelector("#sizeInput");
 const sizeValue = document.querySelector(".size-value");
 const borderBtn = document.querySelector("#borderBtn");
+const gridLayout = document.querySelector("#grid");
 const gridItems = document.querySelectorAll(".grid-item");
 const resetBtn = document.querySelector("#reset");
 const modeRadioBtns = document.querySelectorAll('input[name="modeChoice"]');
@@ -14,9 +15,15 @@ let color = DEFAULT_COLOR;
 let gridSize = DEFAULT_GRID_SIZE;
 let mode = DEFAULT_MODE;
 
+let mouseDown = false
+
 window.onload = () => {
     changeGrid();
 }
+
+gridLayout.onmousedown = () => (mouseDown = true)
+
+gridLayout.onmouseup = () => (mouseDown = false)
 
 colorInput.addEventListener("change", () => {
     color = colorInput.value;
@@ -31,6 +38,12 @@ sizeInput.addEventListener("change", changeGrid);
 
 borderBtn.addEventListener("click", toggleBorder);
 
+resetBtn.addEventListener("click", reset);
+
+modeRadioBtns.forEach(btn => {
+    btn.addEventListener('click', changeMode);
+})
+
 function toggleBorder() {
     const gridItems = document.querySelectorAll(".grid-item");
 
@@ -41,12 +54,6 @@ function toggleBorder() {
     }
 }
 
-resetBtn.addEventListener("click", reset);
-
-modeRadioBtns.forEach(btn => {
-    btn.addEventListener('click', changeMode);
-})
-
 function changeGrid() {
     const grid = document.querySelector("#grid");
     grid.innerHTML = '';
@@ -56,29 +63,34 @@ function changeGrid() {
     for (let i = 0; i < gridSize ** 2; i++) {
         const gridElem = document.createElement("div");
         gridElem.classList.add("grid-item");
-        gridElem.addEventListener("mouseenter", colorItem);  //mouseenter
+        gridElem.addEventListener("mouseenter", colorItem);  
         grid.appendChild(gridElem);
     }
 }
 
 function colorItem(e) {
-    if (mode === 'color') {
-        color = colorInput.value;
-        e.target.style.backgroundColor = color;
-        console.log('color', mode);
-    }    
-    else if (mode === 'rainbow') {
-        color = getRandomColor();
-        e.target.style.backgroundColor = color;
-    }    
-            // e.target.style.backgroundColor = color;
-        // case 'darken':
-        //     color = darkenColor(color);
-        //     e.target.style.backgroundColor = color;
-        // case 'lighten':
-        //     color = lightenColor(color);
-        //     e.target.style.backgroundColor = color;
+    if (e.type === 'mouseenter' && mouseDown) {
+        if (mode === 'color') {
+            color = colorInput.value;
+            e.target.style.backgroundColor = color;
+        }    
+        else if (mode === 'rainbow') {
+            color = getRandomColor(); 
+            e.target.style.backgroundColor = color;  
+        }  
+        else if (mode === 'darken') {
+            if (e.target.style.backgroundColor != '') {
+            color = darkenColor(e);
+            e.target.style.backgroundColor = color;
+            }
+        } 
+        else if (mode === 'eraser') {
+            color = '#FFFFFF'; 
+            e.target.style.backgroundColor = color;  
+        } 
     }
+   
+}
 
 function changeMode(e) {
     mode = e.target.value;
@@ -100,4 +112,14 @@ function getRandomColor() {
     const B = Math.floor(Math.random() * 255);
     const randomColor = `rgb(${R}, ${G}, ${B})`;
     return randomColor;
+}
+
+function darkenColor(e) {
+        let color = e.target.style.backgroundColor;
+        const rgbArr = color.match(/\d+/g);
+        const r = Math.floor(rgbArr[0] * (1 - 0.1));
+        const g = Math.floor(rgbArr[1] * (1 - 0.1));
+        const b = Math.floor(rgbArr[2] * (1 - 0.1));
+        color = `rgb(${r}, ${g}, ${b})`;
+        return color;
 }
